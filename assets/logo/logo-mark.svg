@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Hope Apartments">
   <title>Hope Apartments — svjetionik</title>
-  <g fill="currentColor">
+  <g fill="#0B7FC4">
     <path fill-rule="evenodd" d="M20,54 L44,54 L39,24 L25,24 Z M23.5,33 L40.5,33 L41.17,37 L22.83,37 Z M21.83,43 L42.17,43 L42.83,47 L21.17,47 Z"/>
     <rect x="15" y="54" width="34" height="5" rx="2.5"/>
     <rect x="22" y="19" width="20" height="5" rx="1.5"/>

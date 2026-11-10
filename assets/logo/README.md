@@ -3,32 +3,30 @@
 Smjer A: **svjetionik je slovo E**. Odobreno kao radna verzija 10.11.2026.
 **Bernard još nije potvrdio** — dok ne potvrdi, sve ovdje se može mijenjati.
 
+Sva slova su pretvorena u krivulje. Nijedna datoteka ne treba font da bi se
+ispravno prikazala — rade kao `<img>`, kao pozadina, u mailu, u tisku, bilo gdje.
+
 ## Datoteke
 
-| Datoteka | Za što | Tekst pretvoren u krivulje |
-|---|---|---|
-| `favicon.svg` | favicon, avatar na Booking.com i Facebooku | nema teksta |
-| `logo-mark.svg` | sam svjetionik, `currentColor` — boji se CSS-om | nema teksta |
-| `logo-e.svg` | slovo E izdvojeno, za pečate i sitne primjene | nema teksta |
-| `logo-full.svg` | okomiti logotip (HOPE + val + APARTMANI + zvjezdice) | **ne** |
-| `logo-horizontal.svg` | zaglavlje stranice | **ne** |
+| Datoteka | Za što |
+|---|---|
+| `favicon.svg` | favicon, avatar na Booking.com i Facebooku |
+| `logo-mark.svg` | sam svjetionik, bez kvadrata |
+| `logo-e.svg` | slovo E izdvojeno, sa zrakama |
+| `logo-full.svg` | okomiti logotip — HOPE, val, APARTMANI, tri zvjezdice |
+| `logo-horizontal.svg` | zaglavlje stranice |
+| `logo-horizontal-white.svg` | isto, za tamne podloge i footer |
+| `preview.html` | sve veličine na jednom mjestu, za provjeru |
 
-## Otvoreno: krivulje
+Pregled: `python -m http.server 5700` iz korijena projekta, pa otvori
+`http://127.0.0.1:5700/assets/logo/preview.html`.
 
-`logo-full.svg` i `logo-horizontal.svg` još imaju "HOP" kao `<text>` u Montserrat 800.
+## Bojanje iz CSS-a
 
-To radi **samo tamo gdje je font učitan** — dakle na našoj stranici, ako logotip
-ubacimo kao inline `<svg>` u HTML. Ne radi pouzdano kad se datoteka otvori sama,
-pošalje Bernardu, pošalje tiskari ili učita kao `<img src="logo-full.svg">`:
-tada font nedostaje i slova odskaču na zamjenski font.
-
-Rješenje je pretvoriti slova u krivulje (`<path>`). Za to treba Montserrat 800
-TTF i jedan prolaz kroz `fontTools`. `fontTools 4.64.0` je već na računalu.
-
-Dok se to ne napravi:
-
-- u zaglavlje stranice ide **inline `<svg>`**, ne `<img>`
-- za sve izvan stranice koristi `favicon.svg`, `logo-mark.svg` ili `logo-e.svg`
+Boje su upisane u datoteke (`#0B7FC4`), da rade i kad se učitaju kao `<img>`.
+Ako logotip treba pratiti boju teksta, ubaci SVG **inline u HTML** i zamijeni
+`fill="#0B7FC4"` s `fill="currentColor"`. Kao `<img>` to ne radi — vanjska
+datoteka nema CSS kontekst i `currentColor` ispadne crn.
 
 ## Boje
 
@@ -37,22 +35,32 @@ Definirane u [`../brand.css`](../brand.css).
 | | |
 |---|---|
 | Plava | `#0B7FC4` |
-| Zlatna | `#E8A838` |
+| Zlatna (zrake, zvjezdice) | `#E8A838` |
 | Tamna (podloge) | `#0A2E45` |
 | Tekst uz logotip | `#0A3D62` |
 
 ## Pravila korištenja
 
-- **Najmanja visina** okomitog logotipa: 64 px. Ispod toga ide `logo-horizontal.svg`.
-- **Najmanja širina** vodoravnog: 120 px. Ispod toga ide samo `logo-mark.svg`.
+- **Najmanja visina** okomitog logotipa: 96 px. Ispod toga ide `logo-horizontal.svg`.
+- **Najmanja širina** vodoravnog: 120 px. Ispod toga ide samo `logo-mark.svg` ili `favicon.svg`.
 - **Prazan prostor** oko logotipa: najmanje visina fenjera svjetionika sa svake strane.
 - Na tamnoj podlozi sve je bijelo osim zraka, koje ostaju zlatne.
 - Logotip se ne rasteže, ne rotira, ne stavlja na fotografiju bez tamnog sloja ispod.
+
+### Favicon na 16 px
+
+Na 16 px (kartica preglednika) svjetionik se stapa u plavu mrlju — to je
+granica oblika, ne greška u datoteci. Na 32 px i više čita se uredno.
+Ako nam 16 px postane važan, treba zasebna pojednostavljena verzija.
 
 ## Pismo
 
 Montserrat 800 za logotip i naslove, Jost 300/400/500 za tekst.
 Oba su s Google Fontsa, besplatna za komercijalnu upotrebu (SIL OFL).
+
+Slova u logotipu su izvučena iz varijabilnih verzija oba fonta
+(`wght` 800 odnosno 400) preko `fontTools` i zapečena u `<path>`.
+Fontovi se ne nalaze u repozitoriju.
 
 ## Odakle je nastao
 
