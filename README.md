@@ -1,6 +1,6 @@
 # hope-vodice.com
 
-Website for **Hope Apartments** — three apartments in one family house in Vodice, Croatia, rented by Bernard and Nada Mikulić. Rebuilt from scratch to replace the old WordPress site.
+Website for **Hope Apartments** — three apartments in one family house in Vodice, Croatia, rented by Nada and Bernard Mikulić. Rebuilt from scratch to replace the old WordPress site.
 
 Plain HTML, CSS and about 9 KB of JavaScript. No framework, no database, no build dependencies — `node tools/build.mjs` and nothing else.
 
@@ -99,6 +99,20 @@ On the server:
 `api/calendar.php` is that pricing logic — a mirror of `assets/js/calendar-core.js`. Both read the same `calendar-<id>.json`. **Change a rule in one and change it in the other.**
 
 It runs on PHP 7.4 and up, with or without `mbstring`.
+
+### The calendar panel
+
+`admin/` is a small panel for setting availability and prices without touching JSON. It ships in the bundle as `manage/` and needs PHP, so it does not exist on Vercel.
+
+Open `/manage/`. The first time, it asks you to choose a password and writes the hash to `api/admin-hash.php`; once that file exists the setup screen never appears again, so it cannot be used to reset the password from outside. To change it later, delete that file on the server and open the panel again.
+
+Pick an apartment, click a date and then another to take the stretch between them, set free/booked, a nightly price and a minimum stay, and press Save. "Reset to season default" clears a date's own settings so a later season change reaches it again. **Nothing is written until Save.** Season rates are edited in the same screen.
+
+The panel reads the same `calendar-core.js` rules as the public site, so what it previews is what a guest is shown. `api/admin.php` never writes what the browser sends: it rebuilds the file field by field from values it has validated itself, keeps the metadata, and writes a `.bak` before swapping the new file in.
+
+The folder is called `manage` rather than `admin` so the usual bot sweeps for `/admin` and `/wp-admin` find nothing. That is noise reduction, not a secret — this repository is public, so the name is readable by anyone who looks. **The password is what actually protects it.** If you want an address that is genuinely private, rename the folder on the server to anything you like; everything inside uses relative links, so a rename needs no other edit.
+
+`assets/data/` must be writable for saving to work. The panel says so on screen if it is not.
 
 ### `.htaccess`
 

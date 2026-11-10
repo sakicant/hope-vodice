@@ -53,3 +53,5 @@ npm-debug.log*
 # limiter's scratch file. Both exist only on the host.
 api/config.php
 api/.throttle.json
+api/admin-hash.php
+api/.admin-attempts.json

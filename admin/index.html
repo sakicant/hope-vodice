@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Calendar · Hope Apartments</title>
+<link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="gate" id="gate" hidden>
+  <form class="gate__card" id="gate-form">
+    <img class="gate__logo" src="../assets/logo/logo-horizontal.svg" alt="Hope Apartments" width="150" height="72">
+    <h1 id="gate-title">Sign in</h1>
+    <p class="gate__lead" id="gate-lead">Enter the calendar password.</p>
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" required>
+    <div id="pw2-wrap" hidden>
+      <label for="pw2">Repeat it</label>
+      <input id="pw2" type="password" autocomplete="new-password">
+    </div>
+    <p class="msg" id="gate-msg" role="status" aria-live="polite"></p>
+    <button class="btn btn--primary" type="submit" id="gate-btn">Sign in</button>
+  </form>
+</div>
+
+<div class="app" id="app" hidden>
+  <header class="bar">
+    <img class="bar__logo" src="../assets/logo/logo-horizontal.svg" alt="Hope Apartments" width="150" height="72">
+    <nav class="tabs" id="tabs" aria-label="Apartment"></nav>
+    <span class="bar__state" id="state" aria-live="polite"></span>
+    <button class="btn btn--primary" id="save" disabled>Save</button>
+    <button class="btn btn--ghost" id="logout">Sign out</button>
+  </header>
+
+  <p class="notice" id="notice" hidden></p>
+
+  <main class="grid">
+    <section class="panel">
+      <div class="panel__head">
+        <button class="nav-btn" id="prev" aria-label="Earlier months">‹</button>
+        <strong id="range">…</strong>
+        <button class="nav-btn" id="next" aria-label="Later months">›</button>
+      </div>
+      <div class="months" id="months"></div>
+      <ul class="legend">
+        <li><i class="sw sw--free"></i> Free</li>
+        <li><i class="sw sw--booked"></i> Booked</li>
+        <li><i class="sw sw--override"></i> Own price or minimum</li>
+        <li><i class="sw sw--sel"></i> Selected</li>
+      </ul>
+      <p class="hint">Click a date, then click another to take the whole stretch between them.</p>
+    </section>
+
+    <aside class="side">
+      <section class="card" id="sel-card">
+        <h2>Selected dates</h2>
+        <p class="card__sub" id="sel-label">Nothing selected yet.</p>
+
+        <fieldset id="sel-fields" disabled>
+          <div class="field">
+            <span class="field__label">Availability</span>
+            <div class="seg">
+              <label><input type="radio" name="status" value="available" checked> Free</label>
+              <label><input type="radio" name="status" value="booked"> Booked</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="price">Price per night</label>
+            <div class="with-unit">
+              <input id="price" type="number" min="0" max="10000" step="1" placeholder="season default">
+              <span>€</span>
+            </div>
+            <p class="field__note">Leave empty to use the season price.</p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="minn">Minimum nights</label>
+            <input id="minn" type="number" min="1" max="60" step="1" placeholder="season default">
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn--primary" id="apply" type="button">Apply to selection</button>
+            <button class="btn btn--ghost" id="reset" type="button">Reset to season default</button>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="card">
+        <h2>Season rates</h2>
+        <p class="card__sub">These set the default price and minimum stay for every date in the season.</p>
+        <div id="seasons"></div>
+        <p class="field__note">A season may cross the year end, for example 10-16 to 04-30.</p>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<script src="../assets/js/calendar-core.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -26,6 +26,9 @@ SRC_SITE = os.path.join(ROOT, (site_json.get("base") or "").strip("/").replace("
 # Things that help while working but have no business on the live site.
 SKIP = {"preview.html", "README.md"}
 
+# Where the calendar panel lands in the bundle.
+ADMIN_DIR = "manage"
+
 
 def copy_assets() -> int:
     """Copy the asset tree first: the builder reads the image manifest from it."""
@@ -62,11 +65,18 @@ def main() -> None:
     php_dir = os.path.join(SITE, "api")
     os.makedirs(php_dir, exist_ok=True)
     php = 0
-    for f in ("contact.php", "calendar.php", "config.sample.php"):
+    for f in ("contact.php", "calendar.php", "admin.php", "config.sample.php"):
         shutil.copy2(os.path.join(ROOT, "api", f), os.path.join(php_dir, f))
         php += 1
 
     shutil.copy2(os.path.join(ROOT, "server", ".htaccess"), os.path.join(SITE, ".htaccess"))
+
+    # The calendar panel. Named plainly here; rename the folder on the server
+    # if you would rather its address were not guessable. Everything inside
+    # uses relative links, so a rename needs no other edit.
+    admin_dest = os.path.join(SITE, ADMIN_DIR)
+    shutil.copytree(os.path.join(ROOT, "admin"), admin_dest)
+    admin = len(os.listdir(admin_dest))
 
     # Zip it, with the site at the archive root so it unpacks into public_html.
     archive = os.path.join(DIST, "hope-vodice-site.zip")
@@ -82,6 +92,7 @@ def main() -> None:
     print(f"pages:   {pages}")
     print(f"assets:  {assets}")
     print(f"php:     {php} files + .htaccess")
+    print(f"panel:   {ADMIN_DIR}/ ({admin} files)")
     print(f"archive: dist/hope-vodice-site.zip  ({total} files, {size:.1f} MB)")
     print()
     print("On the server:")
@@ -89,6 +100,7 @@ def main() -> None:
     print("  2. copy api/config.sample.php to api/config.php and fill it in")
     print("  3. make sure api/ is writable, for the rate-limit file")
     print("  4. send yourself a test request from /contact/")
+    print(f"  5. open /{ADMIN_DIR}/ and choose the calendar password")
 
 
 if __name__ == "__main__":
