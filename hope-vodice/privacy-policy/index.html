@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Montserrat:wght@600;700;800&display=swap">
-<link rel="stylesheet" href="/hope-vodice/assets/css/main.css?v=7aec9f18">
+<link rel="stylesheet" href="/hope-vodice/assets/css/main.css?v=12eec4c2">
 <link rel="icon" href="/hope-vodice/assets/logo/favicon.svg?v=1a6ca450" type="image/svg+xml">
 <meta name="theme-color" content="#0A2E45">
 
@@ -31,7 +31,8 @@
 <header class="hdr">
   <div class="wrap hdr__inner">
     <a class="brand" href="/hope-vodice/" aria-label="Hope Apartments, back to the home page">
-      <img  alt="Hope Apartments" fetchpriority="high" src="/hope-vodice/assets/logo/logo-horizontal.svg?v=cae323ca" width="150" height="72">
+      <img class="brand__dark"  alt="Hope Apartments" fetchpriority="high" src="/hope-vodice/assets/logo/logo-horizontal.svg?v=cae323ca" width="150" height="72">
+      <img class="brand__light"  alt="" aria-hidden="true" fetchpriority="high" src="/hope-vodice/assets/logo/logo-horizontal-white.svg?v=f265a4ee" width="150" height="72">
     </a>
     <nav class="nav" aria-label="Main">
       <a href="/hope-vodice/">Home</a>
@@ -56,6 +57,15 @@
         <a class="btn btn--primary" href="/hope-vodice/apartments/">Check availability</a>
   </nav>
 </header>
+<script>
+  /* Set the header's state before the first paint, so a page opened at the
+     top never flashes the solid bar over the hero. main.js keeps it in step
+     from here on; if that never loads, the header stays solid and readable. */
+  (function () {
+    var h = document.querySelector('.hdr');
+    if (h && window.scrollY < 12) h.classList.add('is-top');
+  })();
+</script>
 
 <main id="main">
 <section class="pagehead pagehead--plain">
@@ -189,6 +199,6 @@
 
 <script>window.HOPE_BASE = "/hope-vodice";</script>
 <script src="/hope-vodice/assets/js/calendar-core.js?v=ca4ce3d0" defer></script>
-<script src="/hope-vodice/assets/js/main.js?v=c25745be" defer></script>
+<script src="/hope-vodice/assets/js/main.js?v=9611d6ba" defer></script>
 </body>
 </html>

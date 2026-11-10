@@ -31,7 +31,8 @@
 <header class="hdr">
   <div class="wrap hdr__inner">
     <a class="brand" href="/" aria-label="Hope Apartments, back to the home page">
-      <img src="/assets/logo/logo-horizontal.svg" alt="Hope Apartments" width="150" height="72" fetchpriority="high">
+      <img class="brand__dark" src="/assets/logo/logo-horizontal.svg" alt="Hope Apartments" width="150" height="72" fetchpriority="high">
+      <img class="brand__light" src="/assets/logo/logo-horizontal-white.svg" alt="" aria-hidden="true" width="150" height="72" fetchpriority="high">
     </a>
     <nav class="nav" aria-label="Main">
       {{nav}}
@@ -45,6 +46,15 @@
     {{navMobile}}
   </nav>
 </header>
+<script>
+  /* Set the header's state before the first paint, so a page opened at the
+     top never flashes the solid bar over the hero. main.js keeps it in step
+     from here on; if that never loads, the header stays solid and readable. */
+  (function () {
+    var h = document.querySelector('.hdr');
+    if (h && window.scrollY < 12) h.classList.add('is-top');
+  })();
+</script>
 
 <main id="main">
 {{content}}

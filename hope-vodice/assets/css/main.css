@@ -32,6 +32,7 @@
   --sans: Jost, system-ui, -apple-system, Segoe UI, sans-serif;
 
   --wrap: 1180px;
+  --hdr-h: 66px;
   --r-sm: 8px;
   --r: 14px;
   --r-lg: 22px;
@@ -130,15 +131,50 @@ button { font: inherit; color: inherit; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
 .btn-row--center { justify-content: center; }
 
-/* --- Header -------------------------------------------------------------- */
+/* --- Header --------------------------------------------------------------
+   The header lies over the hero rather than above it, so the photograph runs
+   to the top of the window. At rest it is transparent with the white logo; as
+   soon as the page scrolls it takes on its background and flips back to the
+   blue logo and dark links. Every page starts with a dark hero or banner, so
+   the transparent state always has something dark behind it.
+
+   The solid look is the CSS default: if the script never runs, the header is
+   readable everywhere rather than white-on-white further down the page. */
 .hdr {
-  position: sticky; top: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: rgba(251, 248, 243, .94); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
-.hdr__inner { display: flex; align-items: center; gap: 18px; min-height: 72px; }
+.hdr__inner { display: flex; align-items: center; gap: 18px; min-height: var(--hdr-h); }
 .brand { display: block; flex: none; line-height: 0; }
 .brand img { width: 136px; height: auto; }
+.brand__light { display: none; }
+
+/* at the top of the page, over the hero */
+.hdr.is-top {
+  background: transparent; backdrop-filter: none;
+  border-bottom-color: transparent; box-shadow: none;
+}
+.hdr.is-top .brand__dark { display: none; }
+.hdr.is-top .brand__light { display: block; }
+.hdr.is-top .nav a { color: #E6EFF5; }
+.hdr.is-top .nav a:hover { color: #fff; }
+.hdr.is-top .nav a[aria-current="page"] { color: #fff; border-bottom-color: var(--gold); }
+.hdr.is-top .hdr__cta { background: #fff; color: var(--blue-ink); }
+.hdr.is-top .hdr__cta:hover { background: var(--sand-2); color: var(--blue-ink); }
+.hdr.is-top .burger { background: rgba(255, 255, 255, .14); border-color: rgba(255, 255, 255, .4); }
+.hdr.is-top .burger span { background: #fff; }
+
+/* the open mobile menu needs a solid bar above it whatever the scroll is */
+.hdr.is-menu, .hdr.is-menu.is-top {
+  background: rgba(251, 248, 243, .98); backdrop-filter: blur(10px);
+  border-bottom-color: var(--line);
+}
+.hdr.is-menu .brand__dark { display: block; }
+.hdr.is-menu .brand__light { display: none; }
+.hdr.is-menu .burger { background: #fff; border-color: var(--line); }
+.hdr.is-menu .burger span { background: var(--ink); }
 .nav { display: none; margin-left: auto; gap: 24px; }
 .nav a {
   color: var(--ink-2); text-decoration: none; font-size: .96rem; font-weight: 400;
@@ -148,6 +184,7 @@ button { font: inherit; color: inherit; }
 .nav a[aria-current="page"] { color: var(--blue-ink); font-weight: 500; border-bottom-color: var(--gold); }
 .hdr__cta { display: none; flex: none; padding: 11px 20px; min-height: 42px; }
 @media (min-width: 900px) {
+  :root { --hdr-h: 78px; }
   .nav { display: flex; }
   .hdr__cta { display: inline-flex; }
   .burger { display: none !important; }
@@ -180,7 +217,11 @@ button { font: inherit; color: inherit; }
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(10, 46, 69, .62) 0%, rgba(10, 46, 69, .48) 45%, rgba(10, 46, 69, .78) 100%);
 }
-.hero__inner { padding: clamp(72px, 13vw, 150px) 0 clamp(52px, 9vw, 104px); max-width: 760px; }
+/* the header lies on top, so the first screen owns that height as padding */
+.hero__inner {
+  padding: calc(var(--hdr-h) + clamp(44px, 9vw, 110px)) 0 clamp(52px, 9vw, 104px);
+  max-width: 760px;
+}
 .hero h1 { color: #fff; margin-bottom: .35em; text-shadow: 0 2px 24px rgba(0, 0, 0, .3); }
 .hero__lead { font-size: clamp(1.02rem, .95rem + .5vw, 1.25rem); color: #E4EEF5; margin-bottom: 28px; max-width: 56ch; }
 .hero .eyebrow { color: var(--gold); }
@@ -196,7 +237,14 @@ button { font: inherit; color: inherit; }
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(10, 46, 69, .66), rgba(10, 46, 69, .82));
 }
-.pagehead__inner { padding: clamp(52px, 8vw, 92px) 0 clamp(40px, 6vw, 68px); max-width: 720px; }
+.pagehead__inner {
+  padding: calc(var(--hdr-h) + clamp(34px, 5vw, 60px)) 0 clamp(40px, 6vw, 68px);
+  max-width: 720px;
+}
+/* a page that opens with neither still has to clear the fixed header */
+main > :first-child:not(.hero):not(.pagehead) { padding-top: calc(var(--hdr-h) + 24px); }
+/* and an in-page anchor must not land underneath it */
+[id] { scroll-margin-top: calc(var(--hdr-h) + 14px); }
 .pagehead h1 { color: #fff; }
 .pagehead p { color: #D8E6EF; font-size: 1.06rem; margin-bottom: 0; }
 .pagehead .eyebrow { color: var(--gold); }

@@ -6,19 +6,44 @@
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* --- header: transparent at the top, solid once scrolled ----------------
+     The inline script in the shell sets the first state before paint; this
+     keeps it in step. Reads are passive and the class only changes when the
+     state actually flips, so scrolling does no layout work. */
+  var hdr = document.querySelector('.hdr');
+  if (hdr) {
+    var atTop = hdr.classList.contains('is-top');
+    var syncHeader = function () {
+      var now = window.scrollY < 12;
+      if (now !== atTop) {
+        atTop = now;
+        hdr.classList.toggle('is-top', now);
+      }
+    };
+    syncHeader();
+    window.addEventListener('scroll', syncHeader, { passive: true });
+  }
+
   /* --- mobile nav -------------------------------------------------------- */
   var burger = document.querySelector('.burger');
   var mnav = document.getElementById('mobile-nav');
   if (burger && mnav) {
+    var setMenu = function (open) {
+      burger.setAttribute('aria-expanded', String(open));
+      mnav.classList.toggle('is-open', open);
+      // An open menu needs a solid bar behind it even at the top of the page.
+      if (hdr) hdr.classList.toggle('is-menu', open);
+    };
     burger.addEventListener('click', function () {
-      var open = burger.getAttribute('aria-expanded') === 'true';
-      burger.setAttribute('aria-expanded', String(!open));
-      mnav.classList.toggle('is-open', !open);
+      setMenu(burger.getAttribute('aria-expanded') !== 'true');
     });
     mnav.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        burger.setAttribute('aria-expanded', 'false');
-        mnav.classList.remove('is-open');
+      if (e.target.tagName === 'A') setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') {
+        setMenu(false);
+        burger.focus();
       }
     });
   }
