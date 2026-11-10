@@ -1,0 +1,47 @@
+/* Hope Apartments — brand tokens
+   Radna verzija, čeka Bernardovu potvrdu logotipa.
+   Boje su uzete iz odobrenog smjera A (svjetionik kao slovo E). */
+
+:root {
+  /* --- boje --- */
+  --hope-blue: #0B7FC4;        /* primarna, logotip i gumbi */
+  --hope-blue-dark: #0A3D62;   /* naslovi, tamniji tekst */
+  --hope-deep: #0A2E45;        /* tamne podloge, footer */
+  --hope-gold: #E8A838;        /* zrake svjetionika, zvjezdice, akcent */
+  --hope-sand: #FBF8F3;        /* topla pozadina stranice */
+  --hope-ink: #12232E;         /* tekst */
+  --hope-muted: #5A6B78;       /* sekundarni tekst, potpisi */
+  --hope-line: #E8E2D8;        /* obrubi, razdjelnici */
+  --hope-white: #FFFFFF;
+
+  /* na tamnoj podlozi */
+  --hope-on-deep: #FFFFFF;
+  --hope-on-deep-muted: #9FB6C4;
+
+  /* --- pismo --- */
+  --hope-font-display: Montserrat, system-ui, sans-serif;  /* 800 — logotip, naslovi */
+  --hope-font-body: Jost, system-ui, sans-serif;           /* 300/400/500 — tekst */
+
+  /* --- radijusi --- */
+  --hope-radius-sm: 6px;
+  --hope-radius: 10px;
+  --hope-radius-lg: 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --hope-sand: #0A2E45;
+    --hope-ink: #ECF2F6;
+    --hope-muted: #9FB6C4;
+    --hope-line: #1C4760;
+    --hope-blue-dark: #7FC4EC;
+  }
+}
+
+:root[data-theme="dark"] {
+  --hope-sand: #0A2E45;
+  --hope-ink: #ECF2F6;
+  --hope-muted: #9FB6C4;
+  --hope-line: #1C4760;
+  --hope-blue-dark: #7FC4EC;
+}

@@ -6,7 +6,8 @@ Rebuilt from scratch to replace the old WordPress site on the same domain.
 
 ## Status
 
-Not built yet. This repo holds the new site only; the build has not started.
+Logo direction settled as a working version; the site itself is not built yet.
+Bernard has not confirmed the logo — treat it as provisional.
 
 ## Contact
 
@@ -26,13 +27,16 @@ All three: air conditioning, free Wi-Fi, hairdryer, in-room safe, kamado grill, 
 
 ## Brand
 
-Taken from the 2025 logo — lighthouse, wave, three stars.
+The lighthouse is the letter **E** in HOPE — a tapered tower with three arms to the
+right, lantern and beams sitting above the cap height. Files and usage rules in
+[`assets/logo/README.md`](assets/logo/README.md), tokens in [`assets/brand.css`](assets/brand.css).
 
 | | |
 |---|---|
-| Primary blue | `#048DD8` |
-| Gold (stars) | `#FBC95C` |
-| Accent orange | lighthouse beams |
+| Blue | `#0B7FC4` |
+| Gold | `#E8A838` |
+| Deep (dark surfaces) | `#0A2E45` |
+| Type | Montserrat 800 · Jost 300/400/500 |
 
 ## Local preview
 

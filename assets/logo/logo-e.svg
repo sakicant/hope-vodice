@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="272 8 94 128" width="94" height="128" role="img" aria-label="Slovo E kao svjetionik">
+  <title>Hope Apartments — slovo E</title>
+  <g fill="none" stroke="#E8A838" stroke-width="4.2" stroke-linecap="round">
+    <path d="M297,38 L278,31"/>
+    <path d="M297,46 L276,46"/>
+    <path d="M331,38 L350,31"/>
+    <path d="M331,46 L352,46"/>
+  </g>
+  <g fill="currentColor">
+    <path d="M298,132 L360,132 L360,113 L322,113 L322,104 L352,104 L352,86 L322,86 L322,78 L360,78 L360,59 L306,59 Z"/>
+    <rect x="297" y="50" width="34" height="9" rx="2.5"/>
+    <path d="M305,50 L305,33 L323,33 L323,50 Z"/>
+    <path d="M299,33 L329,33 L314,18 Z"/>
+    <circle cx="314" cy="14" r="3"/>
+  </g>
+  <g fill="#FFFFFF">
+    <rect x="309.2" y="37" width="3.2" height="10"/>
+    <rect x="315.6" y="37" width="3.2" height="10"/>
+  </g>
+</svg>
