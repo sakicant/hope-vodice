@@ -1,0 +1,17 @@
+{
+  "_readme": "Availability and pricing for Apartment H3. One file per apartment; H1 and H2 have their own and never share a date or a rate with this one. Seasons repeat every year and set the default nightly price and minimum stay. 'days' holds only the exceptions, so a date not listed there is available at its season price.",
+  "_todo": "price is null in every season: Bernard has not given the 2027 rates yet. Until a number goes in, the site shows 'rate on request' and the booking form asks us for a quote instead of inventing a total. minNights are placeholders and need confirming too.",
+  "apartment": "Apartment H3",
+  "id": "h3",
+  "updated": "2026-11-10T00:00:00Z",
+  "currency": "EUR",
+  "checkIn": "14:00",
+  "checkOut": "10:00",
+  "seasons": [
+    { "id": "off",  "name": "Off-season",  "from": "10-16", "to": "04-30", "price": null, "minNights": 2 },
+    { "id": "pre",  "name": "Pre-season",  "from": "05-01", "to": "06-14", "price": null, "minNights": 3 },
+    { "id": "high", "name": "High season", "from": "06-15", "to": "09-15", "price": null, "minNights": 7 },
+    { "id": "post", "name": "Post-season", "from": "09-16", "to": "10-15", "price": null, "minNights": 3 }
+  ],
+  "days": {}
+}

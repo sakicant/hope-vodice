@@ -1,0 +1,59 @@
+{
+  "_readme": "Maps a friendly image name to its original file under scrape/media/. The originals are the old site's uploads and are not committed; assets/img/r/*.webp is what ships. Grouping follows the old site: each apartment gets exactly the photos its own page showed, so nothing is attributed to the wrong apartment. 'unassigned' holds good photos that were in the media library but on no apartment page - Bernard needs to say which apartment they belong to.",
+
+  "h1": {
+    "h1-balcony":        "2025/03/FullSizeRender-scaled.jpeg",
+    "h1-bathroom":       "2025/03/FullSizeRender-1-scaled.jpeg",
+    "h1-living-dining":  "2025/03/FullSizeRender-2-scaled.jpeg",
+    "h1-kitchen":        "2025/03/FullSizeRender-3-scaled.jpeg",
+    "h1-dining-balcony": "2025/03/FullSizeRender-4-scaled.jpeg",
+    "h1-dining-tv":      "2025/03/FullSizeRender-5-scaled.jpeg",
+    "h1-living-tv":      "2025/03/FullSizeRender-6-scaled.jpeg",
+    "h1-living-sofa":    "2025/03/FullSizeRender-7-scaled.jpeg"
+  },
+
+  "h2": {
+    "h2-bathroom":     "2025/03/IMG_2739.jpeg",
+    "h2-kitchen-bath": "2025/03/IMG_2740.jpeg",
+    "h2-bed-window":   "2025/03/image2.jpeg",
+    "h2-bed-corner":   "2025/03/image3.jpeg",
+    "h2-bed-double":   "2025/03/image4.jpeg",
+    "h2-dining-tv":    "2025/03/image5.jpeg",
+    "h2-living-sofa":  "2025/03/image6.jpeg",
+    "h2-kitchen":      "2025/03/image7.jpeg",
+    "h2-dining-sofa":  "2025/03/image8.jpeg",
+    "h2-bed-made":     "2025/03/image9.jpeg"
+  },
+
+  "h3": {
+    "h3-balcony":       "2025/03/2eca3e1f-bb8e-45e4-837c-19bd3d8a3c13.jpg",
+    "h3-bathroom":      "2025/03/724e4b0b-9697-433a-9706-d6f17b566060.jpg",
+    "h3-bedroom":       "2025/03/0341610b-6a82-4b70-8d1e-4cdcb8218798.jpg",
+    "h3-bedroom-bed":   "2025/03/7dd937f3-4cb6-4f93-9cfb-d30cf8d11efc.jpg",
+    "h3-bedroom-twin":  "2025/03/01b0d5cc-829e-46fa-bdd8-8052bb51b870.jpg",
+    "h3-bedroom-twin2": "2025/03/8eb144ce-749d-48a4-97d8-fa6c7aaa5ec4.jpg",
+    "h3-bedroom-twin3": "2025/03/fb02ced4-16f5-4c25-8288-9d4a4d4ef65e.jpg",
+    "h3-living-bed":    "2025/03/774ec2f0-44df-4e36-b35f-d77148b3a08c.jpg",
+    "h3-living-dining": "2025/03/96ef92aa-ffce-40d5-a149-c5e4019a6661.jpg",
+    "h3-kitchen":       "2025/03/b7660f38-0297-43fd-8954-034c8fbe97e6.jpg",
+    "h3-living-sofa":   "2025/03/d5696db5-0563-480d-903c-3d332da01d36.jpg"
+  },
+
+  "house": {
+    "house-front":  "2025/03/IMG_2760.jpeg",
+    "house-street": "2025/03/IMG_2759.jpeg"
+  },
+
+  "unassigned": {
+    "room-balcony-door": "2025/03/IMG_2774-scaled.jpeg",
+    "room-mirror":       "2025/03/IMG_2775-scaled.jpeg",
+    "room-bed-sofa":     "2025/03/IMG_2776-scaled.jpeg",
+    "detail-dresser":    "2025/03/IMG_2799-scaled.jpeg",
+    "detail-dresser-2":  "2025/03/IMG_2800-scaled.jpeg",
+    "detail-hallway":    "2025/03/IMG_2801-scaled.jpeg",
+    "detail-laundry":    "2025/03/IMG_1434-scaled.jpg",
+    "room-bed-balcony":  "2025/03/IMG_2696.jpeg",
+    "room-bed":          "2025/03/IMG_2697.jpeg",
+    "room-bed-sofa-2":   "2025/03/IMG_2698.jpeg"
+  }
+}

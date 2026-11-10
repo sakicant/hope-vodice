@@ -1,0 +1,109 @@
+<!--meta {
+  "url": "/apartments/",
+  "title": "The Three Apartments | Hope Apartments Vodice",
+  "description": "Compare Apartment H1, H2 and H3 at Hope Apartments in Vodice. Each has its own calendar and its own rates: 40 m² for four guests, or 70 m² with two bedrooms and a 33 m² balcony for six.",
+  "ogImage": "h1-balcony",
+  "h1": "The three apartments",
+  "crumb": "Apartments"
+} -->
+
+<section class="pagehead">
+  <div class="pagehead__media">
+    <x-img src="h3-living-dining" alt="" sizes="100vw" priority />
+  </div>
+  <div class="wrap pagehead__inner">
+    <span class="eyebrow">Apartments</span>
+    <h1>The three apartments</h1>
+    <p>
+      Same house, same grill, same hosts. Everything else is separate, including
+      the calendar and the price list. Open the one you like and pick your dates there.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Side by side</span>
+      <h2>Which one fits you</h2>
+      <p>
+        H1 and H2 are the same size and sleep four. H3 is nearly twice as big, has two
+        separate bedrooms and the large balcony.
+      </p>
+    </div>
+    <div class="grid grid--3">
+      <x-apt-cards />
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Rates</span>
+      <h2>Each apartment is priced on its own</h2>
+      <p>
+        The nightly rate depends on the apartment and the season. Open an apartment to
+        see its own calendar, where every free date carries its price.
+      </p>
+    </div>
+    <div class="pricerow">
+      <div class="pricebox">
+        <h3>Apartment H1</h3>
+        <p class="muted small">4 guests · 40 m²</p>
+        <p class="pricebox__from" data-from-src="/assets/data/calendar-h1.json">…</p>
+        <p style="margin-top:14px"><a class="btn btn--ghost" href="/apartments/h1/">Calendar and rates <x-icon name="arrow-right" /></a></p>
+      </div>
+      <div class="pricebox">
+        <h3>Apartment H2</h3>
+        <p class="muted small">4 guests · 40 m²</p>
+        <p class="pricebox__from" data-from-src="/assets/data/calendar-h2.json">…</p>
+        <p style="margin-top:14px"><a class="btn btn--ghost" href="/apartments/h2/">Calendar and rates <x-icon name="arrow-right" /></a></p>
+      </div>
+      <div class="pricebox">
+        <h3>Apartment H3</h3>
+        <p class="muted small">6 guests · 70 m²</p>
+        <p class="pricebox__from" data-from-src="/assets/data/calendar-h3.json">…</p>
+        <p style="margin-top:14px"><a class="btn btn--ghost" href="/apartments/h3/">Calendar and rates <x-icon name="arrow-right" /></a></p>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:22px">
+      Booking two apartments for a larger group is normal here. Tell us the dates and
+      the number of people and we will say what works.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">In all three</span>
+      <h2>What every apartment has</h2>
+    </div>
+    <ul class="amenities">
+      <li><x-icon name="snow" /> Air conditioning</li>
+      <li><x-icon name="wifi" /> Free Wi-Fi</li>
+      <li><x-icon name="kitchen" /> Full kitchen</li>
+      <li><x-icon name="bath" /> Private bathroom with shower</li>
+      <li><x-icon name="tv" /> Flat-screen TV</li>
+      <li><x-icon name="balcony" /> Balcony</li>
+      <li><x-icon name="grill" /> Kamado charcoal grill</li>
+      <li><x-icon name="safe" /> In-room safe</li>
+      <li><x-icon name="coffee" /> Coffee machine and kettle</li>
+      <li><x-icon name="fridge" /> Fridge, oven and stovetop</li>
+      <li><x-icon name="hairdryer" /> Hairdryer and free toiletries</li>
+      <li><x-icon name="sun" /> Fresh linen and towels</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section cta">
+  <div class="wrap">
+    <h2>Not sure which one?</h2>
+    <p>Tell us how many of you are coming and when, and we will say which apartment fits and what it costs.</p>
+    <div class="btn-row btn-row--center">
+      <a class="btn btn--gold" href="/contact/">Send us the dates</a>
+      <a class="btn btn--wa" href="{{site.whatsapp}}" target="_blank" rel="noopener">WhatsApp {{site.phone}}</a>
+    </div>
+  </div>
+</section>

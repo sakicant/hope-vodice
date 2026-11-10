@@ -1,0 +1,152 @@
+<!--meta {
+  "url": "/contact/",
+  "title": "Contact & Booking Request | Hope Apartments Vodice",
+  "description": "Send Bernard and Nada your dates and we will confirm availability and the total for the apartment you want. Phone, WhatsApp and email for Hope Apartments, Vodice, Croatia.",
+  "ogImage": "h1-balcony",
+  "h1": "Contact us",
+  "crumb": "Contact"
+} -->
+
+<section class="pagehead pagehead--plain">
+  <div class="wrap pagehead__inner">
+    <span class="eyebrow">Contact</span>
+    <h1>Tell us your dates</h1>
+    <p>
+      Say which apartment you want, when you are coming and how many of you there
+      are. We will reply with availability and the exact total.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid--2">
+      <div>
+        <h2>Booking request</h2>
+        <p class="muted" style="margin-bottom:22px">
+          Coming from one of the calendars? Your dates are already filled in below.
+        </p>
+
+        <div class="quotebox" data-quote hidden></div>
+
+        <form class="form" data-form action="/api/contact.php" method="post" style="margin-top:18px">
+          <div class="field">
+            <label for="apartment">Which apartment</label>
+            <select id="apartment" name="apartment">
+              <option value="">Not sure yet — suggest one</option>
+              <option value="h1">Apartment H1 · 4 guests · 40 m²</option>
+              <option value="h2">Apartment H2 · 4 guests · 40 m²</option>
+              <option value="h3">Apartment H3 · 6 guests · 70 m²</option>
+              <option value="two">Two apartments for a larger group</option>
+            </select>
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label for="arrival">Arrival</label>
+              <input id="arrival" name="arrival" type="date">
+            </div>
+            <div class="field">
+              <label for="departure">Departure</label>
+              <input id="departure" name="departure" type="date">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="guests">How many guests</label>
+            <input id="guests" name="guests" type="number" min="1" max="14" inputmode="numeric">
+          </div>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+
+          <div class="field" aria-hidden="true" style="position:absolute;left:-9999px">
+            <label for="website">Leave this empty</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <p class="form__msg" role="status" aria-live="polite"></p>
+
+          <div class="btn-row">
+            <button class="btn btn--primary" type="submit">Send the request</button>
+            <a class="btn btn--wa" href="{{site.whatsapp}}" target="_blank" rel="noopener">WhatsApp instead</a>
+          </div>
+          <p class="form__note">
+            We use what you send here only to answer you. Nothing goes to anyone else.
+            See the <a href="/privacy-policy/">privacy policy</a>.
+          </p>
+        </form>
+      </div>
+
+      <div>
+        <h2>Or reach us directly</h2>
+        <ul class="contact-list" style="margin-top:20px">
+          <li>
+            <x-icon name="map-pin" />
+            <div>
+              <b>Hope Apartments</b>
+              <a href="{{site.mapLink}}" target="_blank" rel="noopener">{{site.address.full}}</a>
+            </div>
+          </li>
+          <li>
+            <x-icon name="phone" />
+            <div>
+              <b>Phone</b>
+              <a href="tel:{{site.phoneRaw}}">{{site.phone}}</a><br>
+              <a href="tel:{{site.phone2Raw}}">{{site.phone2}}</a>
+            </div>
+          </li>
+          <li>
+            <x-icon name="mail" />
+            <div>
+              <b>Email</b>
+              <a href="mailto:{{site.email}}">{{site.email}}</a>
+            </div>
+          </li>
+          <li>
+            <x-icon name="clock" />
+            <div>
+              <b>When we answer</b>
+              <span class="muted">Mon – Fri 07:00 – 20:00<br>Saturday 08:00 – 20:00<br>Sunday 10:00 – 18:00</span>
+            </div>
+          </li>
+          <li>
+            <x-icon name="message" />
+            <div>
+              <b>Languages</b>
+              <span class="muted">{{site.languages}}</span>
+            </div>
+          </li>
+        </ul>
+
+        <h3 style="margin-top:34px">Where the house is</h3>
+        <iframe class="map-frame" src="{{site.mapEmbed}}" title="Map showing Hope Apartments in Vodice" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand section--tight">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Before you write</span>
+      <h2>Booking questions</h2>
+    </div>
+    <div class="faq">
+      <x-faq group="1" groups="false" />
+    </div>
+  </div>
+</section>

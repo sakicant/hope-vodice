@@ -1,0 +1,147 @@
+<!--meta {
+  "url": "/apartments/h3/",
+  "apartment": "h3",
+  "title": "Apartment H3 | 6 Guests, 70 m², 33 m² Balcony | Hope Apartments Vodice",
+  "description": "Apartment H3 at Hope Apartments in Vodice: 70 m² on the top floor, two separate bedrooms for up to six guests, a living room and a private 33 m² balcony. Its own calendar and rates.",
+  "ogImage": "h3-balcony",
+  "h1": "Apartment H3",
+  "crumb": "Apartment H3"
+} -->
+
+<section class="pagehead">
+  <div class="pagehead__media">
+    <x-img src="h3-balcony" alt="" sizes="100vw" priority />
+  </div>
+  <div class="wrap pagehead__inner">
+    <span class="eyebrow">{{apt.guests}} guests · {{apt.size}} m² · {{apt.floor}}</span>
+    <h1>{{apt.name}}</h1>
+    <p>{{apt.blurb}}</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <nav class="aptswitch" aria-label="Switch apartment">
+      <a href="/apartments/h1/"><strong>H1</strong> 4 guests · 40 m²</a>
+      <a href="/apartments/h2/"><strong>H2</strong> 4 guests · 40 m²</a>
+      <a href="/apartments/h3/" aria-current="page"><strong>H3</strong> 6 guests · 70 m²</a>
+    </nav>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="aptfacts">
+      <div class="aptfact"><x-icon name="users" /><div class="aptfact__v">{{apt.guests}}</div><div class="aptfact__l">guests</div></div>
+      <div class="aptfact"><x-icon name="ruler" /><div class="aptfact__v">{{apt.size}} m²</div><div class="aptfact__l">plus a 33 m² balcony</div></div>
+      <div class="aptfact"><x-icon name="door" /><div class="aptfact__v">2</div><div class="aptfact__l">separate bedrooms</div></div>
+      <div class="aptfact"><x-icon name="bath" /><div class="aptfact__v">1</div><div class="aptfact__l">bathroom with shower</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The apartment</span>
+      <h2>The top floor, and the balcony everyone remembers</h2>
+      <p>
+        Seventy square metres with two separate bedrooms, each with a double bed, so
+        two couples or a family with older children all get a door that closes. The
+        living room and kitchen are shared, as is the single bathroom.
+      </p>
+      <p>
+        Then there is the balcony: thirty-three square metres of it, with a table long
+        enough for everyone and a pergola over the top. It faces the rooftops and
+        catches the evening light, and it is the reason most guests who stay in H3
+        come back to H3.
+      </p>
+    </div>
+    <div class="gal gal--4">
+      <x-apt-gallery id="h3" />
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Availability</span>
+      <h2>{{apt.name}}'s own calendar</h2>
+      <p>
+        This calendar is H3's alone. Green is free, crossed out is taken. Pick an
+        arrival and a departure and the total appears underneath.
+      </p>
+    </div>
+
+    <div class="cal-shell" data-cal="h3" data-cal-src="/assets/data/calendar-h3.json" data-cal-name="Apartment H3">
+      <div class="cal-bar">
+        <button class="cal-nav" type="button" data-cal-prev aria-label="Previous months"><x-icon name="arrow-right" /></button>
+        <strong class="cal-range" data-cal-range>Loading…</strong>
+        <button class="cal-nav" type="button" data-cal-next aria-label="Next months"><x-icon name="arrow-right" /></button>
+      </div>
+      <div class="cal-months" data-cal-months></div>
+      <div class="cal-legend">
+        <span><i style="background:#EEF7F0;box-shadow:inset 0 0 0 1px #C9E2D2"></i> Available</span>
+        <span><i style="background:#F2EDE4;box-shadow:inset 0 0 0 1px #E4DED3"></i> Booked</span>
+        <span><i style="background:#fff;box-shadow:inset 0 0 0 2px #E8A838"></i> Today</span>
+      </div>
+      <div class="cal-summary" data-cal-summary></div>
+      <p class="cal-note" data-cal-updated></p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Rates</span>
+      <h2>What H3 costs</h2>
+      <p>These rates apply to {{apt.name}} only. H1 and H2 are priced separately.</p>
+    </div>
+    <div class="rates" data-cal-rates data-cal-src="/assets/data/calendar-h3.json" data-cal-name="Apartment H3"></div>
+    <p class="small muted center" style="margin-top:24px">
+      The rate covers the whole apartment for up to six guests, not a price per person.
+      Free cancellation up to 30 days before arrival.
+    </p>
+  </div>
+</section>
+
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="section-head section-head--center">
+      <span class="eyebrow">Three steps</span>
+      <h2>How to book H3</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Pick your dates</h3>
+        <p>Use the calendar above. It shows what is free in H3 specifically, not in the house as a whole.</p>
+      </div>
+      <div class="step">
+        <h3>Send the request</h3>
+        <p>Your dates travel with you to the form, so you do not type them twice. Or message us on WhatsApp.</p>
+      </div>
+      <div class="step">
+        <h3>We confirm</h3>
+        <p>{{site.hosts}} reply with the total and how to pay the deposit that holds the booking.</p>
+      </div>
+    </div>
+    <div class="btn-row btn-row--center" style="margin-top:36px">
+      <a class="btn btn--primary" href="/contact/?apt=h3">Request Apartment H3</a>
+      <a class="btn btn--wa" href="{{site.whatsapp}}" target="_blank" rel="noopener">WhatsApp {{site.phone}}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The other two</span>
+      <h2>If H3 is taken</h2>
+    </div>
+    <div class="grid grid--2">
+      <x-apt-cards exclude="h3" />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,549 @@
+{
+ "detail-dresser": {
+  "group": "unassigned",
+  "w": 1920,
+  "h": 2560,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920
+  ],
+  "max": 1920,
+  "portrait": true,
+  "lowres": false
+ },
+ "detail-dresser-2": {
+  "group": "unassigned",
+  "w": 1920,
+  "h": 2560,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920
+  ],
+  "max": 1920,
+  "portrait": true,
+  "lowres": false
+ },
+ "detail-hallway": {
+  "group": "unassigned",
+  "w": 1920,
+  "h": 2560,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920
+  ],
+  "max": 1920,
+  "portrait": true,
+  "lowres": false
+ },
+ "detail-laundry": {
+  "group": "unassigned",
+  "w": 1920,
+  "h": 2560,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920
+  ],
+  "max": 1920,
+  "portrait": true,
+  "lowres": false
+ },
+ "h1-balcony": {
+  "group": "h1",
+  "w": 1920,
+  "h": 2560,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920
+  ],
+  "max": 1920,
+  "portrait": true,
+  "lowres": false
+ },
+ "h1-bathroom": {
+  "group": "h1",
+  "w": 1920,
+  "h": 2560,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920
+  ],
+  "max": 1920,
+  "portrait": true,
+  "lowres": false
+ },
+ "h1-dining-balcony": {
+  "group": "h1",
+  "w": 2560,
+  "h": 1920,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2560
+  ],
+  "max": 2560,
+  "portrait": false,
+  "lowres": false
+ },
+ "h1-dining-tv": {
+  "group": "h1",
+  "w": 1920,
+  "h": 2560,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920
+  ],
+  "max": 1920,
+  "portrait": true,
+  "lowres": false
+ },
+ "h1-kitchen": {
+  "group": "h1",
+  "w": 1920,
+  "h": 2560,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920
+  ],
+  "max": 1920,
+  "portrait": true,
+  "lowres": false
+ },
+ "h1-living-dining": {
+  "group": "h1",
+  "w": 2560,
+  "h": 1920,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2560
+  ],
+  "max": 2560,
+  "portrait": false,
+  "lowres": false
+ },
+ "h1-living-sofa": {
+  "group": "h1",
+  "w": 2560,
+  "h": 1920,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2560
+  ],
+  "max": 2560,
+  "portrait": false,
+  "lowres": false
+ },
+ "h1-living-tv": {
+  "group": "h1",
+  "w": 2560,
+  "h": 1920,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2560
+  ],
+  "max": 2560,
+  "portrait": false,
+  "lowres": false
+ },
+ "h2-bathroom": {
+  "group": "h2",
+  "w": 480,
+  "h": 640,
+  "variants": [
+   480
+  ],
+  "max": 480,
+  "portrait": true,
+  "lowres": true
+ },
+ "h2-bed-corner": {
+  "group": "h2",
+  "w": 240,
+  "h": 320,
+  "variants": [
+   240
+  ],
+  "max": 240,
+  "portrait": true,
+  "lowres": true
+ },
+ "h2-bed-double": {
+  "group": "h2",
+  "w": 320,
+  "h": 240,
+  "variants": [
+   320
+  ],
+  "max": 320,
+  "portrait": false,
+  "lowres": true
+ },
+ "h2-bed-made": {
+  "group": "h2",
+  "w": 320,
+  "h": 240,
+  "variants": [
+   320
+  ],
+  "max": 320,
+  "portrait": false,
+  "lowres": true
+ },
+ "h2-bed-window": {
+  "group": "h2",
+  "w": 320,
+  "h": 240,
+  "variants": [
+   320
+  ],
+  "max": 320,
+  "portrait": false,
+  "lowres": true
+ },
+ "h2-dining-sofa": {
+  "group": "h2",
+  "w": 320,
+  "h": 240,
+  "variants": [
+   320
+  ],
+  "max": 320,
+  "portrait": false,
+  "lowres": true
+ },
+ "h2-dining-tv": {
+  "group": "h2",
+  "w": 240,
+  "h": 320,
+  "variants": [
+   240
+  ],
+  "max": 240,
+  "portrait": true,
+  "lowres": true
+ },
+ "h2-kitchen": {
+  "group": "h2",
+  "w": 320,
+  "h": 240,
+  "variants": [
+   320
+  ],
+  "max": 320,
+  "portrait": false,
+  "lowres": true
+ },
+ "h2-kitchen-bath": {
+  "group": "h2",
+  "w": 480,
+  "h": 640,
+  "variants": [
+   480
+  ],
+  "max": 480,
+  "portrait": true,
+  "lowres": true
+ },
+ "h2-living-sofa": {
+  "group": "h2",
+  "w": 320,
+  "h": 240,
+  "variants": [
+   320
+  ],
+  "max": 320,
+  "portrait": false,
+  "lowres": true
+ },
+ "h3-balcony": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1208,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "h3-bathroom": {
+  "group": "h3",
+  "w": 1536,
+  "h": 2048,
+  "variants": [
+   480,
+   768,
+   1200,
+   1536
+  ],
+  "max": 1536,
+  "portrait": true,
+  "lowres": false
+ },
+ "h3-bedroom": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1536,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "h3-bedroom-bed": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1536,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "h3-bedroom-twin": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1536,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "h3-bedroom-twin2": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1536,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "h3-bedroom-twin3": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1536,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "h3-kitchen": {
+  "group": "h3",
+  "w": 1536,
+  "h": 2048,
+  "variants": [
+   480,
+   768,
+   1200,
+   1536
+  ],
+  "max": 1536,
+  "portrait": true,
+  "lowres": false
+ },
+ "h3-living-bed": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1536,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "h3-living-dining": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1536,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "h3-living-sofa": {
+  "group": "h3",
+  "w": 2048,
+  "h": 1536,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2048
+  ],
+  "max": 2048,
+  "portrait": false,
+  "lowres": false
+ },
+ "house-front": {
+  "group": "house",
+  "w": 640,
+  "h": 480,
+  "variants": [
+   480,
+   640
+  ],
+  "max": 640,
+  "portrait": false,
+  "lowres": true
+ },
+ "house-street": {
+  "group": "house",
+  "w": 640,
+  "h": 480,
+  "variants": [
+   480,
+   640
+  ],
+  "max": 640,
+  "portrait": false,
+  "lowres": true
+ },
+ "room-balcony-door": {
+  "group": "unassigned",
+  "w": 2560,
+  "h": 1920,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2560
+  ],
+  "max": 2560,
+  "portrait": false,
+  "lowres": false
+ },
+ "room-bed": {
+  "group": "unassigned",
+  "w": 240,
+  "h": 320,
+  "variants": [
+   240
+  ],
+  "max": 240,
+  "portrait": true,
+  "lowres": true
+ },
+ "room-bed-balcony": {
+  "group": "unassigned",
+  "w": 320,
+  "h": 240,
+  "variants": [
+   320
+  ],
+  "max": 320,
+  "portrait": false,
+  "lowres": true
+ },
+ "room-bed-sofa": {
+  "group": "unassigned",
+  "w": 2560,
+  "h": 1920,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2560
+  ],
+  "max": 2560,
+  "portrait": false,
+  "lowres": false
+ },
+ "room-bed-sofa-2": {
+  "group": "unassigned",
+  "w": 320,
+  "h": 240,
+  "variants": [
+   320
+  ],
+  "max": 320,
+  "portrait": false,
+  "lowres": true
+ },
+ "room-mirror": {
+  "group": "unassigned",
+  "w": 2560,
+  "h": 1920,
+  "variants": [
+   480,
+   768,
+   1200,
+   1920,
+   2560
+  ],
+  "max": 2560,
+  "portrait": false,
+  "lowres": false
+ }
+}
