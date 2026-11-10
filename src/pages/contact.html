@@ -29,7 +29,8 @@
 
         <div class="quotebox" data-quote hidden></div>
 
-        <form class="form" data-form action="/api/contact.php" method="post" style="margin-top:18px">
+        <form class="form" data-form action="/api/contact.php" method="post"
+              data-fallback-email="{{site.email}}" style="margin-top:18px">
           <div class="field">
             <label for="apartment">Which apartment</label>
             <select id="apartment" name="apartment">

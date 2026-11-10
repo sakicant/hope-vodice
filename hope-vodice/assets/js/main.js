@@ -377,8 +377,14 @@
     var isDate = function (s) { return /^\d{4}-\d{2}-\d{2}$/.test(s || ''); };
 
     if (apt && isDate(arrival) && isDate(departure)) {
+      // Fill the form's own fields too, not just the summary, so the dates
+      // travel with the enquiry however it ends up being sent.
       var aptField = document.getElementById('apartment');
       if (aptField) aptField.value = apt;
+      var arrivalField = document.getElementById('arrival');
+      if (arrivalField) arrivalField.value = arrival;
+      var departureField = document.getElementById('departure');
+      if (departureField) departureField.value = departure;
 
       // The page may be served under a base path, and this is the one request
       // the markup does not spell out for us.
@@ -394,15 +400,21 @@
               q.nights + ' night' + (q.nights > 1 ? 's' : '') + ' · total ' +
               C.money(q.total, data.currency) +
               '<br><span class="muted small">We confirm this when we reply.</span>';
-            quoteBox.hidden = false;
-            if (msg && !msg.value) {
-              msg.value = 'Hello,\n\nI would like to book ' + name + ' from ' +
-                C.prettyDate(q.arrival) + ' to ' + C.prettyDate(q.departure) +
-                ' (' + q.nights + ' nights).\n\n';
-            }
           } else {
-            quoteBox.innerHTML = '<strong>' + name + '</strong><br>' + q.message;
-            quoteBox.hidden = false;
+            quoteBox.innerHTML = '<strong>' + name + ' · ' +
+              C.prettyRange(arrival, departure) + '</strong><br>' + q.message;
+          }
+          quoteBox.hidden = false;
+
+          // The draft is written whether or not we could price the stay. With
+          // no rates published yet the quote always fails, and that is exactly
+          // when the visitor most needs the dates carried over for them.
+          if (msg && !msg.value) {
+            var nights = C.nightsBetween(C.parse(arrival), C.parse(departure));
+            msg.value = 'Hello,\n\nI would like to book ' + name + ' from ' +
+              C.prettyDate(arrival) + ' to ' + C.prettyDate(departure) +
+              (nights > 0 ? ' (' + nights + ' night' + (nights > 1 ? 's' : '') + ')' : '') +
+              '.\n\n';
           }
         })
         .catch(function () { /* the form still works without the quote */ });
@@ -423,6 +435,41 @@
       out.className = 'form__msg ' + (ok ? 'is-ok' : 'is-err');
     }
 
+    /**
+     * When the form cannot be posted, hand the visitor their own message back
+     * as a ready-to-send email instead of a dead end.
+     *
+     * There is no PHP on a static host, so on Vercel the POST always fails.
+     * Telling someone "write to us directly" and leaving them to retype the
+     * dates they just picked loses the enquiry; this opens their mail client
+     * with all of it already in place.
+     */
+    function sayWithMailto(text) {
+      if (!out) return;
+      var to = form.getAttribute('data-fallback-email');
+      if (!to) return say(text, false);
+
+      var f = new FormData(form);
+      var apt = f.get('apartment');
+      var lines = [
+        f.get('message') || '',
+        '',
+        apt ? 'Apartment: ' + apt : '',
+        f.get('arrival') ? 'Arrival: ' + f.get('arrival') : '',
+        f.get('departure') ? 'Departure: ' + f.get('departure') : '',
+        f.get('guests') ? 'Guests: ' + f.get('guests') : '',
+        f.get('name') ? 'Name: ' + f.get('name') : ''
+      ].filter(Boolean).join('\n');
+
+      var href = 'mailto:' + to +
+        '?subject=' + encodeURIComponent('Booking request' + (apt ? ' — ' + apt.toUpperCase() : '')) +
+        '&body=' + encodeURIComponent(lines);
+
+      out.className = 'form__msg is-err';
+      out.innerHTML = text + ' <a href="' + href + '">Open it as an email</a>, ' +
+        'already filled in with your dates.';
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (form.querySelector('[name="website"]').value) return;   // honeypot
@@ -437,12 +484,12 @@
               say('Thank you. Your message is on its way and we will reply shortly.', true);
               form.reset();
             } else {
-              say(data.error || 'The message could not be sent. Please write to us directly instead.', false);
+              sayWithMailto(data.error || 'The message could not be sent from here.');
             }
           });
         })
         .catch(function () {
-          say('The message could not be sent. Please write to us directly instead.', false);
+          sayWithMailto('The message could not be sent from here.');
         })
         .then(function () {
           if (btn) { btn.disabled = false; btn.textContent = 'Send the request'; }
