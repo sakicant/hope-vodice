@@ -47,3 +47,9 @@ venv/
 # --- logs ---
 *.log
 npm-debug.log*
+
+# --- server-side only, never committed ---
+# The live mail config (delivery address, sending domain) and the rate
+# limiter's scratch file. Both exist only on the host.
+api/config.php
+api/.throttle.json

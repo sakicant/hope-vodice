@@ -67,7 +67,42 @@ To move the site to the domain root:
 
 ## Deployment
 
-Vercel serves the repository root as a static site. `vercel.json` redirects `/` to `/hope-vodice/`, caches the image variants for a year, keeps the calendar files uncached, and sets `X-Robots-Tag: noindex` across the whole preview. `.vercelignore` keeps `src/`, `tools/` and the old-site backup out of the deploy.
+There are two targets, and they are built separately.
+
+### Vercel — the review copy
+
+Vercel serves the repository root as a static site, so the site answers at `/hope-vodice/`. `vercel.json` redirects `/` there, caches the image variants for a year, keeps the calendar files uncached, and sets `X-Robots-Tag: noindex` across the whole preview. `.vercelignore` keeps `src/`, `tools/`, `api/` and the old-site backup out of the deploy.
+
+There is no PHP on Vercel, so the booking form cannot post. It falls back to handing the visitor a pre-filled email instead of failing silently.
+
+### The live host — Apache or LiteSpeed with PHP
+
+```bash
+python tools/package.py
+```
+
+Writes `dist/hope-vodice-site.zip`: the site built for the domain root with no path prefix, the PHP handlers, and `.htaccess`, in the shape the server expects. It leaves out the build sources, the backup, the logo preview page and `api/config.php`.
+
+On the server:
+
+1. unpack the archive into `public_html`
+2. copy `api/config.sample.php` to `api/config.php` and fill it in
+3. make sure `api/` is writable — the rate limiter keeps a small file there
+4. send yourself a test request from `/contact/`
+
+**The `from` address in `config.php` must be on hope-vodice.com.** Putting the guest's address there is the usual mistake and SPF will send the mail to spam. The guest's address goes in `Reply-To`, so hitting reply in the mailbox answers them.
+
+### What the PHP does
+
+`api/contact.php` validates the request, drops anything that fills the honeypot, and **re-prices the stay from the calendar file on the server**. The apartment and the dates arrive as form values and form values can be edited, so whatever total the browser showed, the one in the email is the one the server worked out.
+
+`api/calendar.php` is that pricing logic — a mirror of `assets/js/calendar-core.js`. Both read the same `calendar-<id>.json`. **Change a rule in one and change it in the other.**
+
+It runs on PHP 7.4 and up, with or without `mbstring`.
+
+### `.htaccess`
+
+`server/.htaccess` forces HTTPS and one hostname, sets the cache and security headers, hides `config.php`, and **301-redirects every URL the old WordPress site had** — `/accommodation/apartment-h1/` to `/apartments/h1/`, `/our-gallery/` to `/gallery/`, and so on down the old sitemap, so existing links and search results keep working.
 
 ## Prices
 

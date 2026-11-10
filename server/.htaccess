@@ -1,0 +1,132 @@
+# Hope Apartments - server configuration for the live host (Apache / LiteSpeed).
+#
+# This file belongs at the web root of hope-vodice.com, beside index.html.
+# tools/package.py puts it there. It is not used on Vercel, which is static
+# and has its own vercel.json.
+
+Options -Indexes
+DirectoryIndex index.html index.php
+ServerSignature Off
+
+# ---------------------------------------------------------------------------
+# HTTPS and one hostname
+# ---------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://hope-vodice.com/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^www\.hope-vodice\.com$ [NC]
+  RewriteRule ^(.*)$ https://hope-vodice.com/$1 [R=301,L]
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# The old WordPress site
+#
+# Every address below existed on the old site and is in its sitemap, so it is
+# in search results and in other people's links. Each one is sent to whatever
+# replaced it rather than to a 404.
+# ---------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteRule ^accommodation/apartment-h1/?$   /apartments/h1/ [R=301,L]
+  RewriteRule ^accommodation/apartment-h2/?$   /apartments/h2/ [R=301,L]
+  RewriteRule ^accommodation/apartment-h3/?$   /apartments/h3/ [R=301,L]
+  RewriteRule ^accommodation/?$                /apartments/    [R=301,L]
+  RewriteRule ^hope-apartments/?$              /apartments/    [R=301,L]
+  RewriteRule ^accommodation-category/.*$      /apartments/    [R=301,L]
+  RewriteRule ^accommodation-facility/.*$      /apartments/    [R=301,L]
+
+  RewriteRule ^our-gallery/?$                  /gallery/       [R=301,L]
+  RewriteRule ^vodice-croatia/?$               /vodice/        [R=301,L]
+  RewriteRule ^accessibility/?$                /vodice/        [R=301,L]
+  RewriteRule ^about-hope-apartments/?$        /hosts/         [R=301,L]
+  RewriteRule ^contact-us/?$                   /contact/       [R=301,L]
+  RewriteRule ^terms-conditions/?$             /terms/         [R=301,L]
+  RewriteRule ^privacy-policy-for-hope-apartments-vodice/?$ /privacy-policy/ [R=301,L]
+
+  # The booking machinery of the old plugin.
+  RewriteRule ^search-availability/?$          /apartments/    [R=301,L]
+  RewriteRule ^search-results/?$               /apartments/    [R=301,L]
+  RewriteRule ^booking-checkout/?$             /contact/       [R=301,L]
+  RewriteRule ^booking-cancellation/?$         /terms/         [R=301,L]
+  RewriteRule ^booking-confirmation(/.*)?$     /contact/       [R=301,L]
+
+  # Demo pages that shipped with the old theme and were never ours. They have
+  # no replacement, so they go to the front page rather than pretending to.
+  RewriteRule ^service(/.*)?$                  /               [R=301,L]
+  RewriteRule ^home/(offers|restaurant|santorini)/?$ /         [R=301,L]
+
+  # WordPress itself is gone. Answer the endless bot sweeps quickly and
+  # without handing them a page.
+  RewriteRule ^(wp-admin|wp-login\.php|wp-includes|wp-json|xmlrpc\.php) - [R=410,L]
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Errors
+# ---------------------------------------------------------------------------
+ErrorDocument 404 /404.html
+
+# ---------------------------------------------------------------------------
+# Caching
+#
+# The image variants are safe to keep forever: "<name>-<width>.webp" always
+# means the same picture. The stylesheet and the scripts are rewritten in
+# place, but every reference to them carries ?v=<hash of the file>, so a
+# changed file is a new URL. The calendars must never be cached - they are the
+# one thing that changes without the site being rebuilt.
+# ---------------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp                  "access plus 1 year"
+  ExpiresByType image/svg+xml               "access plus 1 week"
+  ExpiresByType text/css                    "access plus 1 year"
+  ExpiresByType application/javascript      "access plus 1 year"
+  ExpiresByType text/html                   "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|jpg|jpeg|png|gif)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  # Availability and prices. Stale ones take bookings we cannot honour.
+  <FilesMatch "^calendar-.*\.json$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Compression
+# ---------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Keep private things private
+# ---------------------------------------------------------------------------
+<FilesMatch "^(config\.php|\.throttle\.json|\.htaccess|\.gitignore|.*\.md)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteRule ^api/(config\.php|\.throttle\.json)$ - [F,L]
+</IfModule>
+
+AddDefaultCharset UTF-8
+AddType image/webp .webp

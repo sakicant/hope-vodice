@@ -31,9 +31,19 @@ const site = JSON.parse(read('src/data/site.json'));
  * the local preview and the Vercel deploy resolve identically with no rewrite
  * rules in between. One setting moves both.
  */
-const BASE = (site.base || '').replace(/\/+$/, '');
-const OUTDIR = BASE ? BASE.replace(/^\//, '') : '.';
+const BASE = (process.env.HOPE_BASE ?? site.base ?? '').replace(/\/+$/, '');
+const OUTDIR = process.env.HOPE_OUT || (BASE ? BASE.replace(/^\//, '') : '.');
 const out = (...p) => join(ROOT, OUTDIR, ...p);
+
+/**
+ * The directory that is the web root.
+ *
+ * With a base path the site sits in a folder inside the web root, so
+ * robots.txt belongs one level up. Without one the output folder IS the web
+ * root. tools/package.py builds with HOPE_BASE="" and HOPE_OUT=dist/site to
+ * get the copy the PHP host wants.
+ */
+const WEBROOT = BASE ? ROOT : join(ROOT, OUTDIR);
 
 const icons = JSON.parse(read('src/data/icons.json'));
 const manifest = JSON.parse(readFileSync(out('assets/img/manifest.json'), 'utf8'));
@@ -163,7 +173,7 @@ function expandAptCards(html) {
           </ul>
           <div class="aptcard__actions">
             <a class="btn btn--ghost" href="${apt.slug}">More details</a>
-            <a class="btn btn--primary" href="${apt.slug}#calendar">See calendar <x-icon name="calendar" /></a>
+            <a class="btn btn--primary" href="${apt.slug}#calendar">Book now <x-icon name="calendar" /></a>
           </div>
         </div>
       </article>`
@@ -446,7 +456,7 @@ writeFileSync(out('sitemap.xml'),
  * it be indexed would put a second, identical site in front of the same
  * searches, so it asks to be left alone instead.
  */
-writeFileSync(join(ROOT, 'robots.txt'), BASE
+writeFileSync(join(WEBROOT, 'robots.txt'), BASE
   ? `# Review build, served under ${BASE}/ on a preview domain.\n` +
     `# Not the live site. Keep it out of search.\n\n` +
     `User-agent: *\nDisallow: /\n`

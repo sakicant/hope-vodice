@@ -2,4 +2,7 @@
 scrape/
 src/
 tools/
+api/
+server/
+dist/
 .claude/
