@@ -216,7 +216,8 @@
           '<strong>' + C.money(q.total, cur) + '</strong>' +
         '</div>' +
         '<div class="cal-summary__actions">' +
-          '<a class="btn btn--primary" href="/contact/?apt=' + encodeURIComponent(aptId) +
+          '<a class="btn btn--primary" href="' + (window.HOPE_BASE || '') +
+            '/contact/?apt=' + encodeURIComponent(aptId) +
             '&amp;arrival=' + q.arrival + '&amp;departure=' + q.departure + '">Request these dates</a>' +
           '<button class="cal-summary__clear" type="button" data-cal-clear>Clear</button>' +
         '</div>';
@@ -379,7 +380,9 @@
       var aptField = document.getElementById('apartment');
       if (aptField) aptField.value = apt;
 
-      loadCal('/assets/data/calendar-' + apt + '.json')
+      // The page may be served under a base path, and this is the one request
+      // the markup does not spell out for us.
+      loadCal((window.HOPE_BASE || '') + '/assets/data/calendar-' + apt + '.json')
         .then(function (data) {
           var q = C.quote(data, arrival, departure);
           var name = (data && data.apartment) || apt.toUpperCase();

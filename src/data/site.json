@@ -1,6 +1,8 @@
 {
   "name": "Hope Apartments",
   "origin": "https://hope-vodice.com",
+  "_base": "Where the site is served from. \"/hope-vodice\" puts every page and asset under that path and builds into a folder of the same name, which is how it is deployed to Vercel for review. Set it to \"\" when the site moves to the real domain root, then rebuild and move assets/ back up a level.",
+  "base": "/hope-vodice",
   "description": "Three apartments in one family house in the centre of Vodice, Croatia. 600 m from Mala Vrulje beach, 300 m from ACI Marina. Air conditioning, full kitchen, free Wi-Fi and a kamado grill. Book direct with your hosts.",
   "tagline": "Three apartments in one house, right in Vodice.",
   "phone": "+385 91 7934 470",

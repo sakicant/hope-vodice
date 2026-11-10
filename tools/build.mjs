@@ -22,9 +22,32 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 
 const site = JSON.parse(read('src/data/site.json'));
+
+/**
+ * Where the site is served from.
+ *
+ * "" means the domain root. "/hope-vodice" means every page and asset lives
+ * under that path, and the built tree goes into a folder of the same name, so
+ * the local preview and the Vercel deploy resolve identically with no rewrite
+ * rules in between. One setting moves both.
+ */
+const BASE = (site.base || '').replace(/\/+$/, '');
+const OUTDIR = BASE ? BASE.replace(/^\//, '') : '.';
+const out = (...p) => join(ROOT, OUTDIR, ...p);
+
 const icons = JSON.parse(read('src/data/icons.json'));
-const manifest = JSON.parse(read('assets/img/manifest.json'));
+const manifest = JSON.parse(readFileSync(out('assets/img/manifest.json'), 'utf8'));
 const layout = read('src/layout.html');
+
+/**
+ * An absolute URL for canonicals, Open Graph and structured data.
+ *
+ * Deliberately without BASE: those tags say where a page lives on the real
+ * site, and the base path is a deployment detail of the review copy. A review
+ * build that claimed hope-vodice.com/hope-vodice/ would be naming a URL that
+ * is never going to exist.
+ */
+const absUrl = (p) => site.origin + p;
 
 const apartments = site.apartments;
 const byId = Object.fromEntries(apartments.map((a) => [a.id, a]));
@@ -138,7 +161,10 @@ function expandAptCards(html) {
             <li><x-icon name="door" /> ${apt.bedrooms === 1 ? 'Open-plan, one sleeping area' : apt.bedrooms + ' separate bedrooms'}</li>
             <li><x-icon name="star" /> ${apt.feature}</li>
           </ul>
-          <a class="btn btn--ghost" href="${apt.slug}">See ${apt.short} and its calendar <x-icon name="arrow-right" /></a>
+          <div class="aptcard__actions">
+            <a class="btn btn--ghost" href="${apt.slug}">More details</a>
+            <a class="btn btn--primary" href="${apt.slug}#calendar">See calendar <x-icon name="calendar" /></a>
+          </div>
         </div>
       </article>`
       )
@@ -195,9 +221,9 @@ const FINGERPRINTED = [
 
 const fingerprints = new Map(
   FINGERPRINTED.map((p) => {
-    const abs = join(ROOT, p.replace(/^\//, ''));
-    if (!existsSync(abs)) return [p, null];
-    return [p, createHash('sha1').update(readFileSync(abs)).digest('hex').slice(0, 8)];
+    const file = out(p.replace(/^\//, ''));
+    if (!existsSync(file)) return [p, null];
+    return [p, createHash('sha1').update(readFileSync(file)).digest('hex').slice(0, 8)];
   })
 );
 
@@ -210,15 +236,38 @@ function fingerprintAssets(html) {
 }
 
 /**
+ * Push every internal URL under BASE.
+ *
+ * Runs last, once, over the finished page. Internal links are the ones that
+ * start with a single slash; anything with a scheme, a protocol-relative "//",
+ * a fragment or a mailto/tel is left alone. srcset carries several URLs in one
+ * attribute, so it gets its own pass.
+ */
+function prefixUrls(html) {
+  if (!BASE) return html;
+  // One pass, anchored on the whitespace before the attribute name. Without
+  // that anchor `src="` also matches the tail of `data-cal-src="`, and the
+  // value comes out prefixed twice.
+  //
+  // Not `content`: Open Graph and canonical already carry the full origin, and
+  // a meta description that happened to start with a slash would be mangled.
+  const ATTRS = 'href|src|action|data-full|data-cal-src|data-from-src';
+  html = html.replace(new RegExp(`(\\s)(${ATTRS})="/(?!/)`, 'g'), `$1$2="${BASE}/`);
+  html = html.replace(/srcset="([^"]+)"/g, (full, value) =>
+    `srcset="${value.replace(/(^|,\s*)\/(?!\/)/g, `$1${BASE}/`)}"`);
+  return html;
+}
+
+/**
  * Keep width/height on inline SVG logos in step with their viewBox, so the
  * header reserves the right box before the file loads and nothing jumps.
  */
 function syncSvgDimensions(html) {
   return html.replace(/<img([^>]*?)src="(\/assets\/logo\/[^"?]+\.svg)([^"]*)"([^>]*?)>/g,
     (tag, before, src, query, after) => {
-      const abs = join(ROOT, src.replace(/^\//, ''));
-      if (!existsSync(abs)) return tag;
-      const box = readFileSync(abs, 'utf8').match(/viewBox="([\d.\s-]+)"/);
+      const file = out(src.replace(/^\//, ''));
+      if (!existsSync(file)) return tag;
+      const box = readFileSync(file, 'utf8').match(/viewBox="([\d.\s-]+)"/);
       if (!box) return tag;
       const n = box[1].trim().split(/\s+/).map(Number);
       const [w, h] = [Math.round(n[2]), Math.round(n[3])];
@@ -253,11 +302,11 @@ function navHtml(current, mobile) {
 /* ---------- structured data --------------------------------------------- */
 
 function jsonLd(meta) {
-  const image = (key) => `${site.origin}/assets/img/r/${key}-${manifest[key].max}.webp`;
+  const image = (key) => absUrl(`/assets/img/r/${key}-${manifest[key].max}.webp`);
 
   const lodging = {
     '@type': 'LodgingBusiness',
-    '@id': `${site.origin}/#lodging`,
+    '@id': absUrl('/#lodging'),
     name: site.name,
     url: `${site.origin}/`,
     description: site.description,
@@ -284,9 +333,9 @@ function jsonLd(meta) {
     })),
     containsPlace: apartments.map((apt) => ({
       '@type': 'Accommodation',
-      '@id': `${site.origin}${apt.slug}#accommodation`,
+      '@id': absUrl(apt.slug + '#accommodation'),
       name: apt.name,
-      url: `${site.origin}${apt.slug}`,
+      url: absUrl(apt.slug),
       description: apt.blurb,
       occupancy: { '@type': 'QuantitativeValue', maxValue: apt.guests, unitText: 'guests' },
       floorSize: { '@type': 'QuantitativeValue', value: apt.size, unitCode: 'MTK' },
@@ -298,13 +347,13 @@ function jsonLd(meta) {
 
   const graph = [
     lodging,
-    { '@type': 'WebSite', '@id': `${site.origin}/#website`, url: `${site.origin}/`, name: site.name, inLanguage: 'en' }
+    { '@type': 'WebSite', '@id': absUrl('/#website'), url: absUrl('/'), name: site.name, inLanguage: 'en' }
   ];
 
   if (meta.faq) {
     graph.push({
       '@type': 'FAQPage',
-      '@id': `${site.origin}${meta.url}#faq`,
+      '@id': absUrl(meta.url + '#faq'),
       mainEntity: site.faq.flatMap((g) =>
         g.items.map((q) => ({
           '@type': 'Question',
@@ -315,9 +364,9 @@ function jsonLd(meta) {
   }
 
   if (meta.url !== '/') {
-    const trail = [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${site.origin}/` }];
+    const trail = [{ '@type': 'ListItem', position: 1, name: 'Home', item: absUrl('/') }];
     if (meta.apartment) {
-      trail.push({ '@type': 'ListItem', position: 2, name: 'Apartments', item: `${site.origin}/apartments/` });
+      trail.push({ '@type': 'ListItem', position: 2, name: 'Apartments', item: absUrl('/apartments/') });
       trail.push({ '@type': 'ListItem', position: 3, name: meta.crumb || meta.h1 });
     } else {
       trail.push({ '@type': 'ListItem', position: 2, name: meta.crumb || meta.h1 });
@@ -339,6 +388,11 @@ for (const file of readdirSync(pagesDir).filter((f) => f.endsWith('.html'))) {
     ? 'noindex, follow'
     : 'index, follow, max-image-preview:large, max-snippet:-1';
 
+  meta.canonical = absUrl(meta.url === '/404.html' ? '/404.html' : meta.url);
+  meta.ogImageUrl = meta.ogImage && manifest[meta.ogImage]
+    ? absUrl(`/assets/img/r/${meta.ogImage}-${Math.min(1200, manifest[meta.ogImage].max)}.webp`)
+    : '';
+
   const apt = meta.apartment ? byId[meta.apartment] : null;
   if (meta.apartment && !apt) throw new Error(`${file}: unknown apartment "${meta.apartment}"`);
   const scope = { site, page: meta, apt };
@@ -359,14 +413,15 @@ for (const file of readdirSync(pagesDir).filter((f) => f.endsWith('.html'))) {
   html = expandIcons(interpolate(html, scope), file);
   html = syncSvgDimensions(html);
   html = fingerprintAssets(html);
+  html = prefixUrls(html);
 
   const outPath =
     meta.url === '/' ? 'index.html'
       : meta.url.endsWith('.html') ? meta.url.slice(1)
         : join(meta.url.replace(/^\/|\/$/g, ''), 'index.html');
-  const abs = join(ROOT, outPath);
-  mkdirSync(dirname(abs), { recursive: true });
-  writeFileSync(abs, html);
+  const dest = out(outPath);
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, html);
   if (!meta.noindex) built.push({ url: meta.url, out: outPath, bytes: Buffer.byteLength(html) });
 }
 
@@ -375,7 +430,7 @@ for (const file of readdirSync(pagesDir).filter((f) => f.endsWith('.html'))) {
 const today = new Date().toISOString().slice(0, 10);
 const priority = (u) => (u === '/' ? '1.0' : u.startsWith('/apartments') ? '0.9' : '0.7');
 
-writeFileSync(join(ROOT, 'sitemap.xml'),
+writeFileSync(out('sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   built
     .sort((a, b) => (a.url === '/' ? -1 : b.url === '/' ? 1 : a.url.localeCompare(b.url)))
@@ -384,12 +439,22 @@ writeFileSync(join(ROOT, 'sitemap.xml'),
       `    <priority>${priority(p.url)}</priority>\n  </url>`)
     .join('\n') + `\n</urlset>\n`);
 
-writeFileSync(join(ROOT, 'robots.txt'),
-  `User-agent: *\nAllow: /\n\nSitemap: ${site.origin}/sitemap.xml\n`);
+/**
+ * robots.txt belongs at the real web root, not inside the base folder.
+ *
+ * A build under a base path is a review copy on someone else's domain. Letting
+ * it be indexed would put a second, identical site in front of the same
+ * searches, so it asks to be left alone instead.
+ */
+writeFileSync(join(ROOT, 'robots.txt'), BASE
+  ? `# Review build, served under ${BASE}/ on a preview domain.\n` +
+    `# Not the live site. Keep it out of search.\n\n` +
+    `User-agent: *\nDisallow: /\n`
+  : `User-agent: *\nAllow: /\n\nSitemap: ${site.origin}/sitemap.xml\n`);
 
 /* ---------- report ------------------------------------------------------- */
 
-console.log('built:');
+console.log(`built into ${OUTDIR === '.' ? 'the repository root' : OUTDIR + '/'}, served from ${BASE || '/'}:`);
 for (const p of built.sort((a, b) => a.url.localeCompare(b.url))) {
   console.log(`  ${p.url.padEnd(22)} ${String(Math.round(p.bytes / 1024)).padStart(4)} KB  ${p.out}`);
 }

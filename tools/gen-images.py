@@ -24,7 +24,12 @@ except ImportError:
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_ROOT = os.path.join(ROOT, "scrape", "media")
-OUT = os.path.join(ROOT, "assets", "img", "r")
+
+# The deployed tree lives under site.json's "base" (e.g. hope-vodice/), so the
+# variants and the manifest go there too and the builder finds them in one place.
+_site = json.load(open(os.path.join(ROOT, "src", "data", "site.json"), encoding="utf-8"))
+OUTDIR = os.path.join(ROOT, (_site.get("base") or "").strip("/").replace("/", os.sep))
+OUT = os.path.join(OUTDIR, "assets", "img", "r")
 WIDTHS = [480, 768, 1200, 1920]
 QUALITY = 78
 
@@ -68,7 +73,7 @@ for group, entries in groups.items():
         }
 
 json.dump(dict(sorted(manifest.items())),
-          open(os.path.join(ROOT, "assets", "img", "manifest.json"), "w", encoding="utf-8"),
+          open(os.path.join(OUTDIR, "assets", "img", "manifest.json"), "w", encoding="utf-8"),
           indent=1)
 
 print(f"variants written: {made}   already there: {skipped}")

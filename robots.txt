@@ -1,4 +1,5 @@
-User-agent: *
-Allow: /
+# Review build, served under /hope-vodice/ on a preview domain.
+# Not the live site. Keep it out of search.
 
-Sitemap: https://hope-vodice.com/sitemap.xml
+User-agent: *
+Disallow: /
