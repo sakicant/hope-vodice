@@ -1,0 +1,49 @@
+# --- local working material, never published ---
+# Backup of the old hope-vodice.com site: 37 pages, 284 original images,
+# scrape scripts. Reference only — stays on the local machine.
+scrape/
+
+# Project skills and local tooling
+.claude/
+
+# Source images before optimization. Only the optimized, web-ready files
+# under assets/ get committed.
+src-images/
+raw-images/
+
+# --- dependencies ---
+node_modules/
+.pnpm-store/
+
+# --- build output ---
+dist/
+.build/
+.vercel/
+.next/
+.cache/
+*.tsbuildinfo
+
+# --- secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- os / editor ---
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+.vscode/
+
+# --- python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- logs ---
+*.log
+npm-debug.log*
